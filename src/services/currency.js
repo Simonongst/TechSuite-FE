@@ -32,3 +32,13 @@ export const updateCurrency = async (updatedCurrency, currencyId) => {
     console.log(`Error in updating currency: ${error.message}`);
   }
 };
+
+export const deleteCurrency = async (currencyId) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/currencies/${currencyId}`)
+    console.log('Deleted currency', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in deleting currency: ${error.message}`);
+  }
+};
