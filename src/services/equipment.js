@@ -12,3 +12,13 @@ export const getAllEquipment = async () => {
     return null;
   }
 };
+
+export const createEquipment = async (newEquipment) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/equipment`, newEquipment)
+    console.log('Created equipment', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in creating equipment: ${error.message}`);
+  }
+};
