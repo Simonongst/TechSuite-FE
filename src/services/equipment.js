@@ -22,3 +22,13 @@ export const createEquipment = async (newEquipment) => {
     console.log(`Error in creating equipment: ${error.message}`);
   }
 };
+
+export const updateEquipment = async (updatedEquipment, equipmentId) => {
+  try {
+    const res = await axios.put(`${BASE_URL}/equipment/${equipmentId}`, updatedEquipment)
+    console.log('Updated equipment', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in updating equipment: ${error.message}`);
+  }
+};
