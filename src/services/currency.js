@@ -13,3 +13,13 @@ export const getAllCurrency = async () => {
   }
 };
 
+export const createCurrency = async (newCurrency) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/currencies`, newCurrency,)
+    console.log('Currency', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in creating currency: ${error.message}`);
+  }
+};
+
