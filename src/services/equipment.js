@@ -32,3 +32,13 @@ export const updateEquipment = async (updatedEquipment, equipmentId) => {
     console.log(`Error in updating equipment: ${error.message}`);
   }
 };
+
+export const deleteEquipment = async (equipmentId) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/equipment/${equipmentId}`)
+    console.log('Deleted equipment', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in deleting equipment: ${error.message}`);
+  }
+};
