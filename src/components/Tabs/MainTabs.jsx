@@ -6,7 +6,7 @@ function MainTabs() {
   return (
     <div className='container mx-auto px-4 py-4 max-w-7xl'>
       <Tabs.Root defaultValue='calculator'>
-        <Tabs.List className='inline-flex bg-gray-200 p-1 rounded-full'>
+        <Tabs.List className='inline-flex bg-gray-200 p-1 rounded-full shadow-md'>
           <Tabs.Trigger
             value='calculator'
             className='flex items-center gap-2 px-10 py-1 rounded-full font-medium
