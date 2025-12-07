@@ -15,11 +15,20 @@ export const getAllCurrency = async () => {
 
 export const createCurrency = async (newCurrency) => {
   try {
-    const res = await axios.post(`${BASE_URL}/currencies`, newCurrency,)
-    console.log('Currency', res);
+    const res = await axios.post(`${BASE_URL}/currencies`, newCurrency)
+    console.log('Created currency', res);
     return res.data;
   } catch (error) {
     console.log(`Error in creating currency: ${error.message}`);
   }
 };
 
+export const updateCurrency = async (updatedCurrency, currencyId) => {
+  try {
+    const res = await axios.put(`${BASE_URL}/currencies/${currencyId}`, updatedCurrency)
+    console.log('Updated currency', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in updating currency: ${error.message}`);
+  }
+};
