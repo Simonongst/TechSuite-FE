@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { IoIosAddCircle } from 'react-icons/io';
 import { HiOutlineRefresh } from 'react-icons/hi';
+import CurrencyTable from '../components/Currency/CurrencyTable';
+import CurrencyDialog from '../components/Currency/CurrencyDialog';
 
 function Currency({ currencyData, fetchCurrencies }) {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -83,6 +85,21 @@ function Currency({ currencyData, fetchCurrencies }) {
           </button>
         </div>
       </div>
+      <CurrencyTable
+        selectedRow={selectedRow}
+        setSelectedRow={setSelectedRow}
+        currencyData={tableData}
+        setOpenDialog={setOpenDialog}
+        setSelectedCurrency={setSelectedCurrency}
+        fetchCurrencies={fetchCurrencies}
+      />
+      <CurrencyDialog
+        openDialog={openDialog}
+        setOpenDialog={setOpenDialog}
+        selectedCurrency={selectedCurrency}
+        setSelectedCurrency={setSelectedCurrency}
+        fetchCurrencies={fetchCurrencies}
+      />
     </div>
   );
 }
