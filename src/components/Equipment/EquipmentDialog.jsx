@@ -41,6 +41,34 @@ function EquipmentDialog({
       setErrMsg('');
     }
   }, [openDialog, selectedEquipment]);
+  /* ========== Functions ========== */
+  function resetValues() {
+    setNewEquipment({
+      type: '',
+      unitCost: '',
+      currency: 'USD',
+      isActive: true,
+    });
+    setErrMsg('');
+    setIsEditMode(false);
+    setSelectedEquipment(null);
+  }
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      if (isEditMode) {
+        await updateEquipment(newEquipment, selectedEquipment._id);
+      } else {
+        await createEquipment(newEquipment);
+      }
+      await fetchEquipment();
+      setOpenDialog(false);
+      setSelectedEquipment(null);
+      setErrMsg('');
+    } catch (err) {
+      setErrMsg(err.message || 'Error saving equipment');
+    }
+  }
 
   return <div>EquipmentDialog</div>;
 }
