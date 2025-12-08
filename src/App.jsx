@@ -6,6 +6,7 @@ import MainTabs from './components/Tabs/MainTabs';
 import { getAllCurrency } from './services/currency';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import Currency from './pages/Currency';
+import Equipment from './pages/Equipment';
 
 function App() {
   const [currencyData, setCurrencyData] = useState([]);
@@ -41,8 +42,15 @@ function App() {
       <Routes>
         <Route
           path='/'
-          element={<EquipmentCalculator currencyData={currencyData.filter((currency) => currency.isActive)} />}
+          element={
+            <EquipmentCalculator
+              currencyData={currencyData.filter(
+                (currency) => currency.isActive
+              )}
+            />
+          }
         />
+        <Route path='/equipment' element={<Equipment />} />
         <Route
           path='/currencies'
           element={
