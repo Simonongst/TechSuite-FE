@@ -1,20 +1,23 @@
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import TopNavBar from './components/NavBars/TopNavBar';
 import UserNavBar from './components/NavBars/UserNavBar';
 import MainTabs from './components/Tabs/MainTabs';
 import { getAllCurrency } from './services/currency';
 import EquipmentCalculator from './pages/EquipmentCalculator';
+import Currency from './pages/Currency';
 
 function App() {
   const [currencyData, setCurrencyData] = useState([]);
+  const location = useLocation();
 
   async function fetchCurrencies() {
-      try {
+    try {
       const data = await getAllCurrency();
       console.log(data);
       if (data) setCurrencyData(data);
     } catch (error) {
-      console.log("Error fetching currency data from BE:", error);
+      console.log('Error fetching currency data from BE:', error);
     }
   }
 
@@ -28,12 +31,28 @@ function App() {
       <div className='flex-1'>
         <UserNavBar />
       </div>
-      <div>
-        <MainTabs />
-      </div>
-      <div>
-        <EquipmentCalculator currencyData={currencyData}/>
-      </div>
+
+      {location.pathname !== '/currencies' && (
+        <div>
+          <MainTabs />
+        </div>
+      )}
+
+      <Routes>
+        <Route
+          path='/'
+          element={<EquipmentCalculator currencyData={currencyData.filter((currency) => currency.isActive)} />}
+        />
+        <Route
+          path='/currencies'
+          element={
+            <Currency
+              currencyData={currencyData}
+              fetchCurrencies={fetchCurrencies}
+            />
+          }
+        />
+      </Routes>
     </div>
   );
 }
