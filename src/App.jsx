@@ -46,7 +46,7 @@ function App() {
         <UserNavBar />
       </div>
 
-      {location.pathname !== '/currencies' && (
+      {location.pathname !== '/currencies' &&  location.pathname !== '/equipment' && (
         <div>
           <MainTabs />
         </div>
