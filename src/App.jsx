@@ -4,12 +4,14 @@ import TopNavBar from './components/NavBars/TopNavBar';
 import UserNavBar from './components/NavBars/UserNavBar';
 import MainTabs from './components/Tabs/MainTabs';
 import { getAllCurrency } from './services/currency';
+import { getAllEquipment } from './services/equipment';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
 
 function App() {
   const [currencyData, setCurrencyData] = useState([]);
+  const [equipmentData, setEquipmentData] = useState([]);
   const location = useLocation();
 
   async function fetchCurrencies() {
@@ -22,8 +24,19 @@ function App() {
     }
   }
 
+  async function fetchEquipment() {
+    try {
+      const data = await getAllEquipment();
+      console.log(data);
+      if (data) setEquipmentData(data);
+    } catch (error) {
+      console.log('Error fetching equipment data from BE:', error);
+    }
+  }
+
   useEffect(() => {
     fetchCurrencies();
+    fetchEquipment();
   }, []);
 
   return (
@@ -50,7 +63,15 @@ function App() {
             />
           }
         />
-        <Route path='/equipment' element={<Equipment />} />
+        <Route
+          path='/equipment'
+          element={
+            <Equipment
+              equipmentData={equipmentData}
+              fetchEquipment={fetchEquipment}
+            />
+          }
+        />
         <Route
           path='/currencies'
           element={
