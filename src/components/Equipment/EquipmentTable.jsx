@@ -78,7 +78,7 @@ function EquipmentTable({
                       <MdOutlineEdit size={20} />
                     </button>
                     <button
-                      className='p-1 rounded-lg text-white cursor-pointer'
+                      className='p-1 rounded-lg text-white cursor-pointer bg-red-400'
                       onClick={() => {
                         handleDelete(row);
                       }}
