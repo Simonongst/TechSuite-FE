@@ -1,7 +1,8 @@
 import { IoSettingsOutline } from 'react-icons/io5';
-import { LuUserRoundCog } from "react-icons/lu";
-import { MdCurrencyExchange } from "react-icons/md";
+import { LuUserRoundCog } from 'react-icons/lu';
+import { MdCurrencyExchange } from 'react-icons/md';
 import { AiOutlineDatabase, AiOutlineAudit } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
 
 function UserNavBar() {
   return (
@@ -12,16 +13,18 @@ function UserNavBar() {
           title='Users'
           className='transition-transform duration-300 ease-in-out hover:scale-110'
         />
-        <MdCurrencyExchange
-          size={25}
-          title='Currency'
-          className='transition-transform duration-300 ease-in-out hover:scale-110'
-        />                                
+        <Link to='/currencies'>
+          <MdCurrencyExchange
+            size={25}
+            title='Currency'
+            className='transition-transform duration-300 ease-in-out hover:scale-110'
+          />
+        </Link>
         <AiOutlineAudit
           size={25}
           title='Audits'
           className='transition-transform duration-300 ease-in-out hover:scale-110'
-        />        
+        />
         <AiOutlineDatabase
           size={25}
           title='Records'
