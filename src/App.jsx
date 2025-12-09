@@ -69,6 +69,8 @@ function App() {
             <Equipment
               equipmentData={equipmentData}
               fetchEquipment={fetchEquipment}
+              currencyData={currencyData}
+              fetchCurrencies={fetchCurrencies}
             />
           }
         />
