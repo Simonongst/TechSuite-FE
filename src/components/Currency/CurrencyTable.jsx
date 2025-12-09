@@ -68,7 +68,10 @@ function CurrencyTable({
                     {row.label}
                   </td>
                   <td className='px-6 py-4 text-sm text-gray-800'>
-                    {row.rateToBase}
+                    {row.rateToBase?.toLocaleString(undefined, {
+                      minimumFractionDigits: row.rateToBase < 10 ? 4 : 2,
+                      maximumFractionDigits: row.rateToBase < 10 ? 4 : 2,
+                    })}
                   </td>
                   <td className='px-6 py-4 text-sm text-gray-800'>
                     {row.isActive ? <span>Yes</span> : <span>No</span>}
