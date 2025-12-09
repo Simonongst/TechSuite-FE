@@ -58,7 +58,7 @@ function EquipmentTable({
               >
                 <td className='px-6 py-4 text-sm text-gray-800'>{row.type}</td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
-                  {row.unitCost}
+                  {row.unitCost?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2,})}
                 </td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
                   {row.currency?.code || row.currency}
