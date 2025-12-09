@@ -6,6 +6,18 @@ function EquipmentPlanning({ currencyData, form, setForm }) {
     setForm({ ...form, [name]: value });
   };
 
+  const handleReset = () => {
+    setForm({
+      currency: 'USD',
+      employees: 0,
+      desktop: 0,
+      laptop: 0,
+      monitor: 0,
+      deskPhone: 0,
+      switchPorts: '',
+    });
+  };
+
   return (
     <div className='space-y-2 text-gray-700'>
       <h2 className='font-semibold'>Equipment Planning Inputs</h2>
@@ -129,6 +141,15 @@ function EquipmentPlanning({ currencyData, form, setForm }) {
           </select>
         </label>
       </fieldset>
+      <div className='mt-12 mb-4 flex justify-end gap-4'>
+        <button
+          type='button'
+          onClick={handleReset}
+          className='text-sm px-4 py-2 bg-gray-100 text-gray-800 rounded shadow hover:bg-gray-200'
+        >
+              Reset
+        </button>
+      </div>
     </div>
   );
 }
