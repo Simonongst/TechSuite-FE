@@ -1,11 +1,6 @@
 import { useState } from 'react';
 
-function EquipmentPlanning({ currencyData }) {
-  const [form, setForm] = useState({
-    currency: 'USD',
-    employees: 0,
-  });
-
+function EquipmentPlanning({ currencyData, form, setForm }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -18,37 +13,122 @@ function EquipmentPlanning({ currencyData }) {
         Enter your organization's requirements to calculate equipment needs
       </p>
 
-      <div>
-        <label className='text-sm font-medium'>
-          <h3 className='mt-6 font-semibold'>$ Currency:</h3>
+      <fieldset className='mb-4'>
+        <label className='text-sm font-medium' htmlFor='currency'>
+          <h3 className='mt-4 font-semibold'>$ Currency:</h3>
           <select
+            id='currency'
             name='currency'
             value={form.currency}
             onChange={handleChange}
             className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            required
           >
             {currencyData
               .slice()
               .sort((a, b) => a.code.localeCompare(b.code))
               .map((currency, idx) => (
                 <option key={idx} value={currency.code}>
-                  {currency.code} - {currency.label} ({currency.rateToBase})
+                  {`${currency.code} - ${
+                    currency.label
+                  } (Rate: ${currency.rateToBase.toLocaleString(undefined, {
+                    minimumFractionDigits: currency.rateToBase < 10 ? 4 : 2,
+                    maximumFractionDigits: currency.rateToBase < 10 ? 4 : 2,
+                  })})`}
                 </option>
               ))}
           </select>
         </label>
-
-        <label className='text-sm font-medium'>
-          <h3 className='mt-6 font-semibold'>Number of Employees:</h3>
+      </fieldset>
+      <fieldset className='mb-4'>
+        <label className='text-sm font-medium' htmlFor='employees'>
+          <h3 className='mt-4 font-semibold'>Number of Employees:</h3>
           <input
+            id='employees'
             type='number'
             name='employees'
             value={form.employees}
             onChange={handleChange}
             className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            required
           ></input>
         </label>
-      </div>
+      </fieldset>
+      <fieldset className='mt-8 mb-4'>
+        <legend className='text-sm font-semibold'>Computer:</legend>
+
+        <div className='grid grid-cols-2 gap-4'>
+          <label className='text-sm font-medium' htmlFor='desktop'>
+            <h3 className='mt-4'>Desktop:</h3>
+            <input
+              id='desktop'
+              type='number'
+              name='desktop'
+              value={form.desktop}
+              onChange={handleChange}
+              className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+              required
+            ></input>
+          </label>
+          <label className='text-sm font-medium' htmlFor='laptop'>
+            <h3 className='mt-4'>Laptop:</h3>
+            <input
+              id='laptop'
+              type='number'
+              name='laptop'
+              value={form.laptop}
+              onChange={handleChange}
+              className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+              required
+            ></input>
+          </label>
+        </div>
+      </fieldset>
+      <fieldset className='mb-4'>
+        <label className='text-sm font-medium' htmlFor='monitor'>
+          <h3 className='mt-4 font-semibold'>Monitor:</h3>
+          <input
+            id='monitor'
+            type='number'
+            name='monitor'
+            value={form.monitor}
+            onChange={handleChange}
+            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            required
+          ></input>
+        </label>
+      </fieldset>
+      <fieldset className='mb-4'>
+        <label className='text-sm font-medium' htmlFor='deskPhone'>
+          <h3 className='mt-4 font-semibold'>Desk Phone:</h3>
+          <input
+            id='deskPhone'
+            type='number'
+            name='deskPhone'
+            value={form.deskPhone}
+            onChange={handleChange}
+            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            required
+          ></input>
+        </label>
+      </fieldset>
+      <fieldset className='mb-4'>
+        <label className='text-sm font-medium' htmlFor='switchPorts'>
+          <h3 className='mt-4 font-semibold'>Network Switch Ports:</h3>
+          <select
+            id='switchPorts'
+            name='switchPorts'
+            value={form.switchPorts}
+            onChange={handleChange}
+            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            required
+          >
+            <option value=''>Select Switch Size</option>
+            <option value='24'>24 Ports</option>
+            <option value='48'>48 Ports</option>
+          </select>
+        </label>
+      </fieldset>
     </div>
   );
 }
