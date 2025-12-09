@@ -16,10 +16,33 @@ function calculateSummary(form, equipmentData, currencyData) {
   // Calculate counts
   const totalDevices =
     Number(form.desktop) + Number(form.laptop) + Number(form.deskPhone);
-  const switchCount = form.switchPorts
-    ? Math.ceil(totalDevices / Number(form.switchPorts))
-    : 0;
+  const switchCount24 =
+    form.switchPorts === '24' ? Math.ceil(totalDevices / 24) : 0;
+  const switchCount48 =
+    form.switchPorts === '48' ? Math.ceil(totalDevices / 48) : 0;
   const ethernetCount = totalDevices;
+
+  let switchItems = [];
+
+  if (form.switchPorts === '24') {
+    const switchCount24 = Math.ceil(totalDevices / 24);
+    switchItems.push({
+      label: 'Network Switches - 24 Ports',
+      qty: switchCount24,
+      unitCost: getCost('Network Switch - 24 Ports') * rate,
+      totalCost: switchCount24 * getCost('Network Switch - 24 Ports') * rate,
+    });
+  }
+
+  if (form.switchPorts === '48') {
+    const switchCount48 = Math.ceil(totalDevices / 48);
+    switchItems.push({
+      label: 'Network Switches - 48 Ports',
+      qty: switchCount48,
+      unitCost: getCost('Network Switch - 48 Ports') * rate,
+      totalCost: switchCount48 * getCost('Network Switch - 48 Ports') * rate,
+    });
+  }
 
   // Item Arrays
   const items = [
@@ -47,18 +70,13 @@ function calculateSummary(form, equipmentData, currencyData) {
       unitCost: getCost('Desk Phone') * rate,
       totalCost: Number(form.deskPhone) * getCost('Desk Phone') * rate,
     },
-    {
-      label: 'Network Switches',
-      qty: switchCount,
-      unitCost: getCost('Network Switch') * rate,
-      totalCost: switchCount * getCost('Network Switch') * rate,
-    },
+    ...switchItems,
     {
       label: 'Ethernet Cables',
       qty: ethernetCount,
       unitCost: getCost('Ethernet Cable') * rate,
       totalCost: ethernetCount * getCost('Ethernet Cable') * rate,
-    },    
+    },
   ];
 
   // Totals
