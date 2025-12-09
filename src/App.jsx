@@ -46,11 +46,12 @@ function App() {
         <UserNavBar />
       </div>
 
-      {location.pathname !== '/currencies' &&  location.pathname !== '/equipment' && (
-        <div>
-          <MainTabs />
-        </div>
-      )}
+      {location.pathname !== '/currencies' &&
+        location.pathname !== '/equipment' && (
+          <div>
+            <MainTabs />
+          </div>
+        )}
 
       <Routes>
         <Route
@@ -60,6 +61,7 @@ function App() {
               currencyData={currencyData.filter(
                 (currency) => currency.isActive
               )}
+              equipmentData={equipmentData}
             />
           }
         />
