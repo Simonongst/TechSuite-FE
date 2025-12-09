@@ -4,7 +4,12 @@ import { HiOutlineRefresh } from 'react-icons/hi';
 import EquipmentTable from '../components/Equipment/EquipmentTable';
 import EquipmentDialog from '../components/Equipment/EquipmentDialog';
 
-function Equipment({ equipmentData, fetchEquipment }) {
+function Equipment({
+  equipmentData,
+  fetchEquipment,
+  currencyData,
+  fetchCurrencies,
+}) {
   const [selectedRow, setSelectedRow] = useState(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState(null);
@@ -99,6 +104,8 @@ function Equipment({ equipmentData, fetchEquipment }) {
         selectedEquipment={selectedEquipment}
         setSelectedEquipment={setSelectedEquipment}
         fetchEquipment={fetchEquipment}
+        currencyData={currencyData}
+        fetchCurrencies={fetchCurrencies}
       />
     </div>
   );
