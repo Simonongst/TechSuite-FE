@@ -123,9 +123,9 @@ function EquipmentPlanning({ currencyData, form, setForm }) {
             className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
             required
           >
-            <option value=''>Select Switch Size</option>
-            <option value='24'>24 Ports</option>
-            <option value='48'>48 Ports</option>
+            <option value=''>Select Switch Type</option>
+            <option value='24'>24</option>
+            <option value='48'>48</option>
           </select>
         </label>
       </fieldset>
