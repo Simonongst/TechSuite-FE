@@ -170,6 +170,7 @@ function EquipmentDialog({
                 id='equipment-unitCost'
                 type='number'
                 min='0'
+                step='0.01'
                 value={newEquipment.unitCost}
                 onChange={(e) =>
                   setNewEquipment({
