@@ -57,7 +57,8 @@ function EquipmentDialog({
     'Laptop',
     'Monitor',
     'Desk Phone',
-    'Network Switch',
+    'Network Switch - 24 Ports',
+    'Network Switch - 48 Ports',
     'Ethernet Cable',
   ];
 
