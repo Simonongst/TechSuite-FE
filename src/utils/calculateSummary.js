@@ -10,7 +10,21 @@ function calculateSummary(form, equipmentData, currencyData) {
     const equipmentItem = equipmentData.find(
       (equipment) => equipment.type === type && equipment.isActive
     );
-    return equipmentItem ? equipmentItem.unitCost : 0;
+    if (!equipmentItem) return 0;
+
+    const equipmentCurrency = currencyData.find(
+      (currency) =>
+        currency._id === equipmentItem.currency._id ||
+        currency.code === equipmentItem.currency.code
+    );
+    const equipmentRate = equipmentCurrency ? equipmentCurrency.rateToBase : 1;
+
+    if (equipmentCurrency?.code === form.currency) {
+      return equipmentItem.unitCost;
+    }
+
+    const costInBase = equipmentItem.unitCost / equipmentRate;
+    return costInBase * rate;
   };
 
   // Calculate counts
@@ -29,8 +43,8 @@ function calculateSummary(form, equipmentData, currencyData) {
     switchItems.push({
       label: 'Network Switches - 24 Ports',
       qty: switchCount24,
-      unitCost: getCost('Network Switch - 24 Ports') * rate,
-      totalCost: switchCount24 * getCost('Network Switch - 24 Ports') * rate,
+      unitCost: getCost('Network Switch - 24 Ports'),
+      totalCost: switchCount24 * getCost('Network Switch - 24 Ports'),
     });
   }
 
@@ -39,8 +53,8 @@ function calculateSummary(form, equipmentData, currencyData) {
     switchItems.push({
       label: 'Network Switches - 48 Ports',
       qty: switchCount48,
-      unitCost: getCost('Network Switch - 48 Ports') * rate,
-      totalCost: switchCount48 * getCost('Network Switch - 48 Ports') * rate,
+      unitCost: getCost('Network Switch - 48 Ports'),
+      totalCost: switchCount48 * getCost('Network Switch - 48 Ports'),
     });
   }
 
@@ -49,33 +63,33 @@ function calculateSummary(form, equipmentData, currencyData) {
     {
       label: 'Desktops',
       qty: Number(form.desktop),
-      unitCost: getCost('Desktop') * rate,
-      totalCost: Number(form.desktop) * getCost('Desktop') * rate,
+      unitCost: getCost('Desktop'),
+      totalCost: Number(form.desktop) * getCost('Desktop'),
     },
     {
       label: 'Laptops',
       qty: Number(form.laptop),
-      unitCost: getCost('Laptop') * rate,
-      totalCost: Number(form.laptop) * getCost('Laptop') * rate,
+      unitCost: getCost('Laptop'),
+      totalCost: Number(form.laptop) * getCost('Laptop'),
     },
     {
       label: 'Monitors',
       qty: Number(form.monitor),
-      unitCost: getCost('Monitor') * rate,
-      totalCost: Number(form.monitor) * getCost('Monitor') * rate,
+      unitCost: getCost('Monitor'),
+      totalCost: Number(form.monitor) * getCost('Monitor'),
     },
     {
       label: 'Desk Phones',
       qty: Number(form.deskPhone),
-      unitCost: getCost('Desk Phone') * rate,
-      totalCost: Number(form.deskPhone) * getCost('Desk Phone') * rate,
+      unitCost: getCost('Desk Phone'),
+      totalCost: Number(form.deskPhone) * getCost('Desk Phone'),
     },
     ...switchItems,
     {
       label: 'Ethernet Cables',
       qty: ethernetCount,
-      unitCost: getCost('Ethernet Cable') * rate,
-      totalCost: ethernetCount * getCost('Ethernet Cable') * rate,
+      unitCost: getCost('Ethernet Cable'),
+      totalCost: ethernetCount * getCost('Ethernet Cable'),
     },
   ];
 
