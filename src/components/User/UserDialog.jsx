@@ -53,12 +53,33 @@ function UserDialog({
       password: '',
       email: '',
       role: 'Viewer',
-      isEmployed: true,
+      isAPIT: false,
     });
     setEidErrMsg('');
     setIsEditMode(false);
     setSelectedUser(null);
   }
+
+  async function handleCreateUser(e) {
+    e.preventDefault();
+    setEidErrMsg('');
+    try {
+      const result = await createUser(newUser, tokens.access);
+
+      if (result.success === false) {
+        if (result.message.includes('EID')) {
+          setEidErrMsg(result.message);
+        } 
+      } else {
+        resetValues();
+        setOpenDialog(false);
+        fetchUsers();
+      }
+      console.log('User created:', result);
+    } catch (error) {
+      console.log('Failed to create user', error);
+    }
+  }  
 
   return <div>UserDialog</div>;
 }
