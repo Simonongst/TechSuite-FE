@@ -8,11 +8,13 @@ function UserNavBar() {
   return (
     <div className='container mx-auto px-4 py-4 max-w-7xl'>
       <div className='flex justify-end gap-3'>
-        <LuUserRoundCog
-          size={25}
-          title='Users'
-          className='transition-transform duration-300 ease-in-out hover:scale-110'
-        />
+        <Link to='/users'>
+          <LuUserRoundCog
+            size={25}
+            title='Users'
+            className='transition-transform duration-300 ease-in-out hover:scale-110'
+          />
+        </Link>
         <Link to='/equipment'>
           <MdComputer
             size={25}
