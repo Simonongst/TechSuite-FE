@@ -5,6 +5,7 @@ import UserNavBar from './components/NavBars/UserNavBar';
 import MainTabs from './components/Tabs/MainTabs';
 import { getAllCurrency } from './services/currency';
 import { getAllEquipment } from './services/equipment';
+import { getAllUsers } from './services/user';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
