@@ -69,7 +69,7 @@ function UserDialog({
       if (result.success === false) {
         if (result.message.includes('EID')) {
           setEidErrMsg(result.message);
-        } 
+        }
       } else {
         resetValues();
         setOpenDialog(false);
@@ -79,7 +79,28 @@ function UserDialog({
     } catch (error) {
       console.log('Failed to create user', error);
     }
-  }  
+  }
+
+  async function handleUpdateUser(e) {
+    e.preventDefault();
+    setEidErrMsg('');
+    try {
+      const result = await updateUser(newUser, selectedUser._id, tokens.access);
+
+      if (result.success === false) {
+        if (result.message.includes('EID')) {
+          setEidErrMsg(result.message);
+        } 
+      } else {
+        resetValues();
+        setOpenDialog(false);
+        fetchUsers();
+      }
+      console.log('User updated:', result);
+    } catch (error) {
+      console.log('Failed to update user', error);
+    }
+  }
 
   return <div>UserDialog</div>;
 }
