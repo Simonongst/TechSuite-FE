@@ -16,3 +16,16 @@ export const getAllUsers = async (token) => {
   }
 };
 
+export const getUserById = async (userId, token) => {
+  try {
+    const res = await axios.get(`${BASE_URL}/users/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(`Error in fetching ${userId}: ${error.message}`);
+    return null;
+  }
+};
