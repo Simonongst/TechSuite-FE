@@ -33,11 +33,42 @@ async function signIn(eid, password) {
     }
   }
 
+async function signUp(userData) {
+  try {
+    const { data } = await axios.post(`${BASE_URL}/sign-up`, userData);
+    return { success: true, message: data.message };
+  } catch (error) {
+    console.error('SignUp Error Details:', error.response?.data);
+    return { 
+      success: false, 
+      error: error.response?.data || error.message
+    };
+  }
+}
+
+  async function signOut() {
+    try {
+      await axios.post(`${BASE_URL}/sign-out`, {}, {
+        headers: {
+          Authorization: `Bearer ${tokens.access}`,
+        },
+      });
+    } catch (error) {
+      console.log('Sign out error:', error);
+    } finally {
+      setUser(null);
+      setTokens({ access: null, refresh: null });
+    }
+  }
+
+
   const value = {
     user,
     tokens,
     loading,
     signIn,
+    signUp,
+    signOut,
     isAuthenticated: !!user,
   };
 
