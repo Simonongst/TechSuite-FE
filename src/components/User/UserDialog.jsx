@@ -102,6 +102,19 @@ function UserDialog({
     }
   }
 
+  function handleInputChange(e) {
+    const { name, value } = e.target;
+    setNewUser((prev) => ({
+      ...prev,
+      [name]:
+        name === 'email'
+          ? value.toLowerCase()
+          : name === 'isAPIT'
+          ? value === 'Yes'
+          : value,
+    }));
+  }  
+
   return <div>UserDialog</div>;
 }
 
