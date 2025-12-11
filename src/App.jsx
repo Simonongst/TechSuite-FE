@@ -54,7 +54,7 @@ function App() {
   }, []);
 
   return (
-    <div className='h-screen w-full bg-gray-50'>
+    <div className='min-h-screen w-full bg-gray-50'>
       <TopNavBar />
       <div className='flex-1'>
         <UserNavBar />
