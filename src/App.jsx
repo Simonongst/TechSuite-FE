@@ -8,10 +8,12 @@ import { getAllEquipment } from './services/equipment';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
+import User from './pages/User';
 
 function App() {
   const [currencyData, setCurrencyData] = useState([]);
   const [equipmentData, setEquipmentData] = useState([]);
+  const [userData, setUserData] = useState([]);
   const location = useLocation();
 
   async function fetchCurrencies() {
@@ -34,9 +36,20 @@ function App() {
     }
   }
 
+  async function fetchUsers() {
+    try {
+      const data = await getAllUsers();
+      console.log(data);
+      if (data) setUserData(data);
+    } catch (error) {
+      console.log('Error fetching users data from BE:', error);
+    }
+  }
+
   useEffect(() => {
     fetchCurrencies();
     fetchEquipment();
+    fetchUsers();
   }, []);
 
   return (
@@ -47,13 +60,23 @@ function App() {
       </div>
 
       {location.pathname !== '/currencies' &&
-        location.pathname !== '/equipment' && (
+        location.pathname !== '/equipment' &&
+        location.pathname !== '/users' && (
           <div>
             <MainTabs />
           </div>
         )}
 
       <Routes>
+        <Route
+          path='/users'
+          element={
+            <User 
+              userData={userData}
+              fetchUsers={fetchUsers} 
+            />
+          }
+        />
         <Route
           path='/'
           element={
