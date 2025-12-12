@@ -1,11 +1,14 @@
-import axios from "axios";
+import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const getAllCurrency = async () => {
+export const getAllCurrency = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}/currencies`);
-    console.log('Currencies', res);
+    const res = await axios.get(`${BASE_URL}/currencies`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     console.log(`Error in fetching currencies: ${error.message}`);
@@ -13,19 +16,30 @@ export const getAllCurrency = async () => {
   }
 };
 
-export const createCurrency = async (newCurrency) => {
+export const createCurrency = async (newCurrency, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}/currencies`, newCurrency)
-    console.log('Created currency', res);
+    const res = await axios.post(`${BASE_URL}/currencies`, newCurrency, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     console.log(`Error in creating currency: ${error.message}`);
   }
 };
 
-export const updateCurrency = async (updatedCurrency, currencyId) => {
+export const updateCurrency = async (updatedCurrency, currencyId, token) => {
   try {
-    const res = await axios.put(`${BASE_URL}/currencies/${currencyId}`, updatedCurrency)
+    const res = await axios.put(
+      `${BASE_URL}/currencies/${currencyId}`,
+      updatedCurrency,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     console.log('Updated currency', res);
     return res.data;
   } catch (error) {
@@ -33,9 +47,13 @@ export const updateCurrency = async (updatedCurrency, currencyId) => {
   }
 };
 
-export const deleteCurrency = async (currencyId) => {
+export const deleteCurrency = async (currencyId, token) => {
   try {
-    const res = await axios.delete(`${BASE_URL}/currencies/${currencyId}`)
+    const res = await axios.delete(`${BASE_URL}/currencies/${currencyId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log('Deleted currency', res);
     return res.data;
   } catch (error) {
