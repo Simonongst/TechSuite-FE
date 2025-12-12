@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost/3000/auth';
+const BASE_URL = 'http://localhost:3000/auth';
 
 const AuthContext = createContext(null); // calling AuthContext outside of <AuthProvider> will return null
 
