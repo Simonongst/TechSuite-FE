@@ -151,7 +151,7 @@ function EquipmentDialog({
                 className='mt-1 block w-full border rounded-md px-3 py-2 text-sm'
                 required
               >
-                <option value=''>Select Equipment</option>
+                <option disabled value=''>Select Equipment</option>
                 {equipmentType.map((type, idx) => (
                   <option key={idx} value={type}>
                     {type}
@@ -202,7 +202,7 @@ function EquipmentDialog({
                 className='mt-1 block w-full border rounded-md px-3 py-2 text-sm'
                 required
               >
-                <option value=''>Select Currency</option>
+                <option disabled value=''>Select Currency</option>
                 {currencyData.map((currency) => (
                   <option key={currency._id} value={currency._id}>
                     {currency.code}
