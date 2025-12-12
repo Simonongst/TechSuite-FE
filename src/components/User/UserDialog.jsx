@@ -43,7 +43,7 @@ function UserDialog({
   }, [selectedUser]);
 
   /* ========== Arrays ========== */
-  const roles = ['User', 'Editor', 'Admin'];
+  const roles = ['User', 'Editor', 'Reviewer', 'Admin'];
   const apitAssociate = ['Yes', 'No'];
 
   /* ========== Functions ========== */
