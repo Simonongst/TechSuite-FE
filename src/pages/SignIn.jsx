@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import techsuite from '../assets/techsuite.png';
+import techsuite2 from '../assets/techsuite_2.png';
 
 const SignIn = () => {
   const [eid, setEid] = useState('');
@@ -29,7 +29,7 @@ const SignIn = () => {
 
   return (
     <div className='grid-bg min-h-screen flex items-center justify-center bg-slate-800 flex-col'>
-      <img src={techsuite} alt='TechSuite Logo' className='w-80 pb-5' />
+      <img src={techsuite2} alt='TechSuite Logo' className='w-90 pb-5' />
       <div className='max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow'>
         <div>
           <h2 className='text-center text-3xl font-bold text-gray-900'>
