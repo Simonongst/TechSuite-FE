@@ -1,8 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import avatarBoy from '../../assets/avatar-sample-boy.png';
 import techsuite from '../../assets/techsuite.png';
+import { useAuth } from '../../context/AuthContext';
 
 function TopNavBar() {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
+
+  async function handleLogout(e) {
+    e.preventDefault();
+    await signOut();
+    navigate('/signin');
+  }
+
   return (
     <div className='bg-white border-b border-slate-200 shadow-sm sticky top-0 z-50'>
       <div className='container mx-auto px-4 py-4 max-w-7xl'>
@@ -19,21 +29,26 @@ function TopNavBar() {
             </div>
           </div>
 
+          {user && (
           <div className='flex flex-col items-end'>
             <div className='flex items-center space-x-2'>
               <img
                 src={avatarBoy}
                 alt='Profile Picture'
-                className='w-10 mr-2'
+                className='w-10 h-10 mr-2 rounded-full'
               />
-              <h1>Simon Ong</h1>
+              <h1>{user.username}</h1>
               <p>|</p>
-              <h1 className='text-slate-400'>Admin</h1>
+              <h1 className='text-slate-400'>{user.role}</h1>
             </div>
-            <a href='/logout' className='text-blue-500 text-sm hover:underline'>
+            <button
+              onClick={handleLogout}
+              className='text-blue-500 text-sm hover:underline'
+            >
               Logout
-            </a>
+            </button>
           </div>
+          )}
         </div>
       </div>
     </div>
