@@ -2,10 +2,13 @@ import axios from 'axios';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export const getAllEquipment = async () => {
+export const getAllEquipment = async (token) => {
   try {
-    const res = await axios.get(`${BASE_URL}/equipment`);
-    console.log('Equipment', res);
+    const res = await axios.get(`${BASE_URL}/equipment`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     console.error(`Error in fetching equipment: ${error.message}`);
@@ -13,10 +16,13 @@ export const getAllEquipment = async () => {
   }
 };
 
-export const createEquipment = async (newEquipment) => {
+export const createEquipment = async (newEquipment, token) => {
   try {
-    const res = await axios.post(`${BASE_URL}/equipment`, newEquipment);
-    console.log('Created equipment', res);
+    const res = await axios.post(`${BASE_URL}/equipment`, newEquipment, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return res.data;
   } catch (error) {
     console.error(`Error in creating equipment: ${error.message}`);
@@ -27,13 +33,17 @@ export const createEquipment = async (newEquipment) => {
   }
 };
 
-export const updateEquipment = async (updatedEquipment, equipmentId) => {
+export const updateEquipment = async (updatedEquipment, equipmentId, token) => {
   try {
     const res = await axios.put(
       `${BASE_URL}/equipment/${equipmentId}`,
-      updatedEquipment
+      updatedEquipment,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     );
-    console.log('Updated equipment', res);
     return res.data;
   } catch (error) {
     console.error(`Error in updating equipment: ${error.message}`);
@@ -44,9 +54,13 @@ export const updateEquipment = async (updatedEquipment, equipmentId) => {
   }
 };
 
-export const deleteEquipment = async (equipmentId) => {
+export const deleteEquipment = async (equipmentId, token) => {
   try {
-    const res = await axios.delete(`${BASE_URL}/equipment/${equipmentId}`);
+    const res = await axios.delete(`${BASE_URL}/equipment/${equipmentId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     console.log('Deleted equipment', res);
     return res.data;
   } catch (error) {
