@@ -87,8 +87,8 @@ function User({ userData, fetchUsers }) {
         selectedRow={selectedRow}
         setSelectedRow={setSelectedRow}
         userData={tableData}
-        openDialog={openDialog}
         setOpenDialog={setOpenDialog}
+        selectedUser={selectedUser}
         setSelectedUser={setSelectedUser}
         fetchUsers={fetchUsers}
       />
