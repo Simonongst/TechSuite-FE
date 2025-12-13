@@ -1,23 +1,26 @@
 import { MdOutlineEdit, MdDeleteOutline } from 'react-icons/md';
+import UserDeleteAlert from './UserDeleteAlert.jsx';
 import { deleteUser } from '../../services/user.js';
+import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx';
 
 function UserTable({
   selectedRow,
   setSelectedRow,
   userData,
-  openDialog,
   setOpenDialog,
   selectedUser,
   setSelectedUser,
   fetchUsers,
 }) {
   const { tokens } = useAuth();
+  const [openAlert, setOpenAlert] = useState(false);
 
   async function handleDelete() {
     try {
       await deleteUser(selectedUser._id, tokens.access);
       await fetchUsers();
+      setOpenAlert(false);
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -88,6 +91,7 @@ function UserTable({
                           size={20}
                           onClick={() => {
                             setSelectedUser(row);
+                            setOpenAlert(true);
                           }}
                         />
                       </button>
@@ -99,6 +103,11 @@ function UserTable({
           </tbody>
         </table>
       </div>
+      <UserDeleteAlert
+        openAlert={openAlert}
+        setOpenAlert={setOpenAlert}
+        handleDelete={handleDelete}
+      />
     </div>
   );
 }
