@@ -72,7 +72,12 @@ function App() {
     );
   }
 
-  const authPaths = ['/signin', '/signup', '/forgot-password', '/reset-password'];
+  const authPaths = [
+    '/signin',
+    '/signup',
+    '/forgot-password',
+    '/reset-password',
+  ];
 
   return (
     <div
@@ -87,8 +92,7 @@ function App() {
           {location.pathname !== '/currencies' &&
             location.pathname !== '/equipment' &&
             location.pathname !== '/users' &&
-            location.pathname !== '/settings' &&
-            <MainTabs />}
+            location.pathname !== '/settings' && <MainTabs />}
         </>
       )}
 
@@ -107,7 +111,11 @@ function App() {
 
         <Route
           path='/users'
-          element={<User userData={userData} fetchUsers={fetchUsers} />}
+          element={
+            <RoleProtectedRoute allowedRoles={['Admin']}>
+              <User userData={userData} fetchUsers={fetchUsers} />
+            </RoleProtectedRoute>
+          }
         />
         <Route
           path='/'
@@ -123,29 +131,36 @@ function App() {
         <Route
           path='/equipment'
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={['Admin']}>
               <Equipment
                 equipmentData={equipmentData}
                 fetchEquipment={fetchEquipment}
                 currencyData={currencyData}
                 fetchCurrencies={fetchCurrencies}
               />
-            </ProtectedRoute>
+            </RoleProtectedRoute>
           }
         />
         <Route
           path='/currencies'
           element={
-            <ProtectedRoute>
+            <RoleProtectedRoute allowedRoles={['Admin']}>
               <Currency
                 currencyData={currencyData}
                 fetchCurrencies={fetchCurrencies}
               />
+            </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path='/settings'
+          element={
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           }
         />
-        <Route path='/settings' element={<Settings />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
     </div>
   );
