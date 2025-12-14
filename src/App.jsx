@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { useAuth } from "./context/AuthContext.jsx";
+import { useAuth } from './context/AuthContext.jsx';
 import TopNavBar from './components/NavBars/TopNavBar';
 import UserNavBar from './components/NavBars/UserNavBar';
 import MainTabs from './components/Tabs/MainTabs';
@@ -15,6 +15,7 @@ import EquipmentCalculator from './pages/EquipmentCalculator';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
 import User from './pages/User';
+import Settings from './pages/Settings.jsx';
 
 function App() {
   const [currencyData, setCurrencyData] = useState([]);
@@ -72,32 +73,31 @@ function App() {
   const authPaths = ['/signin', '/signup'];
 
   return (
-    <div className={authPaths.includes(location.pathname) ? '' : 'min-h-screen w-full'}>
+    <div
+      className={
+        authPaths.includes(location.pathname) ? '' : 'min-h-screen w-full'
+      }
+    >
       {!authPaths.includes(location.pathname) && (
         <>
           <TopNavBar />
-            <UserNavBar />
-                  {location.pathname !== '/currencies' &&
-        location.pathname !== '/equipment' &&
-        location.pathname !== '/users' && 
-            <MainTabs /> }
-
-        
+          <UserNavBar />
+          {location.pathname !== '/currencies' &&
+            location.pathname !== '/equipment' &&
+            location.pathname !== '/users' &&
+            location.pathname !== '/settings' && <MainTabs />}
         </>
       )}
 
-
-
       <Routes>
-
         {/* Public routes */}
         <Route
-          path="/signin"
-          element={isAuthenticated ? <Navigate to="/" replace /> : <SignIn />}
+          path='/signin'
+          element={isAuthenticated ? <Navigate to='/' replace /> : <SignIn />}
         />
         <Route
-          path="/signup"
-          element={isAuthenticated ? <Navigate to="/" replace /> : <SignUp />}
+          path='/signup'
+          element={isAuthenticated ? <Navigate to='/' replace /> : <SignUp />}
         />
 
         <Route
@@ -119,12 +119,12 @@ function App() {
           path='/equipment'
           element={
             <ProtectedRoute>
-            <Equipment
-              equipmentData={equipmentData}
-              fetchEquipment={fetchEquipment}
-              currencyData={currencyData}
-              fetchCurrencies={fetchCurrencies}
-            />
+              <Equipment
+                equipmentData={equipmentData}
+                fetchEquipment={fetchEquipment}
+                currencyData={currencyData}
+                fetchCurrencies={fetchCurrencies}
+              />
             </ProtectedRoute>
           }
         />
@@ -132,14 +132,14 @@ function App() {
           path='/currencies'
           element={
             <ProtectedRoute>
-            <Currency
-              currencyData={currencyData}
-              fetchCurrencies={fetchCurrencies}
-            />
+              <Currency
+                currencyData={currencyData}
+                fetchCurrencies={fetchCurrencies}
+              />
             </ProtectedRoute>
           }
         />
-        
+        <Route path='/settings' element={<Settings />} />
       </Routes>
     </div>
   );
