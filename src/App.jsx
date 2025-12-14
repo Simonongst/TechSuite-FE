@@ -16,6 +16,8 @@ import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
 import User from './pages/User';
 import Settings from './pages/Settings.jsx';
+import ForgotPassword from './pages/ForgotPassword.jsx';
+import ResetPassword from './pages/ResetPassword.jsx';
 
 function App() {
   const [currencyData, setCurrencyData] = useState([]);
@@ -70,7 +72,7 @@ function App() {
     );
   }
 
-  const authPaths = ['/signin', '/signup'];
+  const authPaths = ['/signin', '/signup', '/forgot-password', '/reset-password'];
 
   return (
     <div
@@ -85,7 +87,8 @@ function App() {
           {location.pathname !== '/currencies' &&
             location.pathname !== '/equipment' &&
             location.pathname !== '/users' &&
-            location.pathname !== '/settings' && <MainTabs />}
+            location.pathname !== '/settings' &&
+            <MainTabs />}
         </>
       )}
 
@@ -95,6 +98,8 @@ function App() {
           path='/signin'
           element={isAuthenticated ? <Navigate to='/' replace /> : <SignIn />}
         />
+        <Route path='/forgot-password' element={<ForgotPassword />} />
+        <Route path='/reset-password' element={<ResetPassword />} />
         <Route
           path='/signup'
           element={isAuthenticated ? <Navigate to='/' replace /> : <SignUp />}
@@ -140,6 +145,7 @@ function App() {
           }
         />
         <Route path='/settings' element={<Settings />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
