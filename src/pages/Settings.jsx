@@ -25,17 +25,14 @@ function Settings() {
       );
       setToastMessage(res.message);
       setOpenDialog(false);
-      setOpenToast(false);
-      requestAnimationFrame(() => setOpenToast(true));
+      setOpenToast(true);
+      setTimeout(() => setOpenToast(false), 1000);
 
       setOldPassword('');
       setNewPassword('');
       setConfirmPassword('');
     } catch (err) {
       setToastMessage(err.message);
-      setOpenToast(false);
-      requestAnimationFrame(() => setOpenToast(true));
-
       console.log('Failed to change password', err);
     }
   };
@@ -137,15 +134,13 @@ function Settings() {
             </AlertDialog.Portal>
           </AlertDialog.Root>
         </div>
-        {toastMessage && (
-          <ToastMessage
-            key={toastMessage}
-            open={openToast}
-            onOpenChange={setOpenToast}
-            title='Password Change'
-            description={toastMessage}
-          />
-        )}
+
+        <ToastMessage
+          openToast={openToast}
+          setOpenToast={setOpenToast}
+          title='Password Change'
+          description={toastMessage}
+        />
       </div>
     </Toast.Provider>
   );
