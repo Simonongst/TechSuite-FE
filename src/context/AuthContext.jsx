@@ -11,6 +11,16 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const storedTokens = localStorage.getItem('tokens');
+    const storedUser = localStorage.getItem('user');
+
+    if (storedTokens) {
+      setTokens(JSON.parse(storedTokens));
+    }
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+
     setLoading(false);
   }, []);
 
@@ -19,9 +29,12 @@ async function signIn(eid, password) {
       const { data } = await axios.post(`${BASE_URL}/sign-in`, { eid, password });
 
       setTokens({ access: data.access, refresh: data.refresh });
+      localStorage.setItem('tokens', JSON.stringify({ access: data.access, refresh: data.refresh }));
 
       const payload = JSON.parse(atob(data.access.split('.')[1]));
-      setUser({ _id: payload._id, username: payload.username, eid: payload.eid, role: payload.role });
+      const userObj = ({ _id: payload._id, username: payload.username, eid: payload.eid, role: payload.role });
+      setUser(userObj);
+      localStorage.setItem('user', JSON.stringify(userObj));
 
       return { success: true };
     } catch (error) {
@@ -58,6 +71,8 @@ async function signUp(userData) {
     } finally {
       setUser(null);
       setTokens({ access: null, refresh: null });
+      localStorage.removeItem('tokens');
+      localStorage.removeItem('user');
     }
   }
 
