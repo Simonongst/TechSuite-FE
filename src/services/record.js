@@ -15,3 +15,20 @@ export const getAllRecords = async (token) => {
     return { success: false, message: error.message };
   }
 };
+
+export const createRecord = async (newRecord, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/records`, newRecord, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.error(`Error in creating record: ${error.message}`);
+    if (error.response?.data) {
+      return error.response.data;
+    }
+    return { success: false, message: error.message };
+  }
+};
