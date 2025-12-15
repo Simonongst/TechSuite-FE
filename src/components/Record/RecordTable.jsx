@@ -7,7 +7,6 @@ function RecordTable({
   setSelectedRow,
   recordData,
   fetchRecords,
-  setSelectedRecord,
 }) {
   const { tokens } = useAuth();
 
