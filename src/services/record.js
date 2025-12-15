@@ -36,7 +36,7 @@ export const createRecord = async (newRecord, token) => {
 export const updateRecord = async (updatedRecord, recordId, token) => {
   try {
     const res = await axios.put(
-      `${BASE_URL}/equipment/${recordId}`,
+      `${BASE_URL}/records/${recordId}`,
       updatedRecord,
       {
         headers: {
