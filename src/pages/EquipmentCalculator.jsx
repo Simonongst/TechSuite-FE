@@ -19,7 +19,7 @@ function EquipmentCalculator({ currencyData, equipmentData }) {
   return (
     <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 py-4 max-w-7xl mx-auto'>
       <div className='lg:col-span-2 bg-white rounded-lg shadow-md p-6'>
-        <EquipmentPlanning currencyData={currencyData} form={form} setForm={setForm} />
+        <EquipmentPlanning currencyData={currencyData} form={form} setForm={setForm} summary={summary}/>
       </div>
       <div className='lg:col-span-1 bg-white rounded-lg shadow-md p-6'>
         <EquipmentSummary summary={summary} form={form}/>
