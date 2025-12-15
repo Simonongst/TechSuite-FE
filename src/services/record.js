@@ -32,3 +32,24 @@ export const createRecord = async (newRecord, token) => {
     return { success: false, message: error.message };
   }
 };
+
+export const updateRecord = async (updatedRecord, recordId, token) => {
+  try {
+    const res = await axios.put(
+      `${BASE_URL}/equipment/${recordId}`,
+      updatedRecord,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.error(`Error in updating record: ${error.message}`);
+    if (error.response?.data) {
+      return error.response.data;
+    }
+    return { success: false, message: error.message };
+  }
+};
