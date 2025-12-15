@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useAuth } from '../../context/AuthContext'
+import { createRecord } from '../../services/record';
 
-function EquipmentPlanning({ currencyData, form, setForm }) {
+function EquipmentPlanning({ currencyData, form, setForm, summary }) {
+const { tokens } = useAuth();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -16,6 +19,17 @@ function EquipmentPlanning({ currencyData, form, setForm }) {
       deskPhone: 0,
       switchPorts: '',
     });
+  };
+
+    const handleSave = async () => {
+    const newRecord = { form, summary };
+    const res = await createRecord(newRecord, tokens.access);
+    if (res.success) {
+      console.log('Record saved:', res.record);
+      // Optionally show a toast or redirect to Records page
+    } else {
+      console.error('Failed to save record:', res.error);
+    }
   };
 
   return (
@@ -149,6 +163,14 @@ function EquipmentPlanning({ currencyData, form, setForm }) {
         >
               Reset
         </button>
+        <button
+          type="button"
+          onClick={handleSave}
+          className="text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+        >
+          Save Entry
+        </button>
+
       </div>
     </div>
   );
