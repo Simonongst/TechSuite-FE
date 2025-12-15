@@ -2,7 +2,6 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useState, useEffect } from 'react';
 import { createEquipment, updateEquipment } from '../../services/equipment';
-import Currency from '../../pages/Currency';
 
 function EquipmentDialog({
   openDialog,
