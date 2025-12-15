@@ -11,10 +11,12 @@ import RoleProtectedRoute from './components/Routes/RoleProtectedRoute.jsx';
 import { getAllCurrency } from './services/currency';
 import { getAllEquipment } from './services/equipment';
 import { getAllUsers } from './services/user';
+import { getAllRecords } from './services/record';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
 import User from './pages/User';
+import Records from './pages/Records.jsx';
 import Settings from './pages/Settings.jsx';
 import ForgotPassword from './pages/ForgotPassword.jsx';
 import ResetPassword from './pages/ResetPassword.jsx';
@@ -23,6 +25,7 @@ function App() {
   const [currencyData, setCurrencyData] = useState([]);
   const [equipmentData, setEquipmentData] = useState([]);
   const [userData, setUserData] = useState([]);
+  const [recordData, setRecordData] = useState([]);
   const { isAuthenticated, loading, tokens } = useAuth();
   const location = useLocation();
 
@@ -56,11 +59,22 @@ function App() {
     }
   }
 
+  async function fetchRecords() {
+    try {
+      const data = await getAllRecords(tokens.access);
+      console.log(data);
+      if (data) setRecordData(data);
+    } catch (error) {
+      console.log('Error fetching records data from BE:', error);
+    }
+  }
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchCurrencies();
       fetchEquipment();
       fetchUsers();
+      fetchRecords();
     }
   }, [isAuthenticated]);
 
@@ -92,6 +106,7 @@ function App() {
           {location.pathname !== '/currencies' &&
             location.pathname !== '/equipment' &&
             location.pathname !== '/users' &&
+            location.pathname !== '/records' &&
             location.pathname !== '/settings' && <MainTabs />}
         </>
       )}
@@ -150,6 +165,17 @@ function App() {
                 fetchCurrencies={fetchCurrencies}
               />
             </RoleProtectedRoute>
+          }
+        />
+        <Route
+          path='/records'
+          element={
+            <ProtectedRoute>
+              <Records
+                recordData={recordData}
+                fetchRecords={fetchRecords}
+              />
+            </ProtectedRoute>
           }
         />
         <Route
