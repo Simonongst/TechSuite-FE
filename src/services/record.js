@@ -53,3 +53,16 @@ export const updateRecord = async (updatedRecord, recordId, token) => {
     return { success: false, message: error.message };
   }
 };
+
+export const deleteRecord = async (recordId, token) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/records/${recordId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(`Error in deleting record: ${error.message}`);
+  }
+};
