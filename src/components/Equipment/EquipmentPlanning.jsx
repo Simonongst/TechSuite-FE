@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/AuthContext'
-import { createRecord } from '../../services/record';
+import { createRecord, updateRecord } from '../../services/record';
 
-function EquipmentPlanning({ currencyData, form, setForm, summary }) {
+function EquipmentPlanning({ currencyData, form, setForm, summary, editRecord, handleDone }) {
 const { tokens } = useAuth();
 
   const handleChange = (e) => {
@@ -22,11 +22,18 @@ const { tokens } = useAuth();
   };
 
     const handleSave = async () => {
-    const newRecord = { form, summary };
-    const res = await createRecord(newRecord, tokens.access);
+    const payload = { form, summary };
+    let res;
+
+    if (editRecord?._id) {
+      res = await updateRecord(payload, editRecord._id, tokens.access);
+    } else {
+      res = await createRecord(payload, tokens.access);
+    }
+
     if (res.success) {
       console.log('Record saved:', res.record);
-      // Optionally show a toast or redirect to Records page
+      if (handleDone) handleDone();
     } else {
       console.error('Failed to save record:', res.error);
     }
@@ -156,6 +163,7 @@ const { tokens } = useAuth();
         </label>
       </fieldset>
       <div className='mt-12 mb-4 flex justify-end gap-4'>
+        {!editRecord && (
         <button
           type='button'
           onClick={handleReset}
@@ -163,14 +171,23 @@ const { tokens } = useAuth();
         >
               Reset
         </button>
+        )}
         <button
           type="button"
           onClick={handleSave}
           className="text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
         >
-          Save Entry
+          {editRecord ? 'Update Entry' : 'Save Entry'}
         </button>
-
+        {editRecord && (
+          <button
+            type='button'
+            onClick={handleDone}
+            className="text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+          >
+            Cancel
+          </button>
+        )}
       </div>
     </div>
   );
