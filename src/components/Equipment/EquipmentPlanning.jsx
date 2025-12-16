@@ -167,7 +167,7 @@ const { tokens } = useAuth();
         <button
           type='button'
           onClick={handleReset}
-          className='text-sm px-4 py-2 bg-gray-100 text-gray-800 rounded shadow hover:bg-gray-200'
+          className='text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700'
         >
               Reset
         </button>
