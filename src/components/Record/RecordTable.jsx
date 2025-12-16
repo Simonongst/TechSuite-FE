@@ -54,6 +54,9 @@ function RecordTable({
               Switch Ports
             </th>
             <th className='px-6 py-3 text-left text-sm font-semibold text-gray-700'>
+              Ethernet Cables
+            </th>
+            <th className='px-6 py-3 text-left text-sm font-semibold text-gray-700'>
               Total Items
             </th>
             <th className='px-6 py-3 text-left text-sm font-semibold text-gray-700'>
@@ -78,7 +81,7 @@ function RecordTable({
                   ${isSelected ? 'bg-blue-100' : 'hover:bg-gray-50'}`}
               >
                 <td className='px-6 py-4 text-sm text-gray-800'>
-                  {new Date(row.createdAt).toLocaleString()}
+                  {new Date(row.updatedAt || row.createdAt).toLocaleDateString()}
                 </td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
                   {row.form.employees}
@@ -96,7 +99,16 @@ function RecordTable({
                   {row.form.deskPhone}
                 </td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
-                  {row.form.switchPorts}
+                  {row.summary.items
+                    .filter((item) => item.label.includes('Network Switches'))
+                    .map((item) => `${item.qty} (${item.label.includes('24') ? '24 Ports' : '48 Ports'})`)
+                  }
+                </td>
+                <td className='px-6 py-4 text-sm text-gray-800'>
+                  {Number(row.form.desktop || 0) +
+                  Number(row.form.laptop || 0) +
+                  Number(row.form.deskPhone || 0)
+                  }
                 </td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
                   {row.summary.totalItems}
