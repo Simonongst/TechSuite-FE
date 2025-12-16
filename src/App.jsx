@@ -134,8 +134,21 @@ function App() {
         />
         <Route
           path='/'
+          key='new'
           element={
             <EquipmentCalculator
+              currencyData={currencyData.filter(
+                (currency) => currency.isActive
+              )}
+              equipmentData={equipmentData}
+            />
+          }
+        />
+        <Route
+          path='/calculator'
+          element={
+            <EquipmentCalculator
+              key='edit'
               currencyData={currencyData.filter(
                 (currency) => currency.isActive
               )}
@@ -171,10 +184,10 @@ function App() {
           path='/records'
           element={
             <ProtectedRoute>
-              <Records
-                recordData={recordData}
-                fetchRecords={fetchRecords}
-              />
+              <Records 
+                recordData={recordData} 
+                fetchRecords={fetchRecords} 
+                />
             </ProtectedRoute>
           }
         />
