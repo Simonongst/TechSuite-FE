@@ -1,5 +1,7 @@
 import { MdOutlineEdit, MdDeleteOutline } from 'react-icons/md';
 import { deleteCurrency } from '../../services/currency';
+import { useAuth } from '../../context/AuthContext';
+
 function CurrencyTable({
   selectedRow,
   setSelectedRow,
@@ -8,6 +10,9 @@ function CurrencyTable({
   currencyData,
   fetchCurrencies,
 }) {
+
+  const { tokens } = useAuth();
+
   if (!currencyData || currencyData.length === 0) {
     return <div className='p-4 text-slate-500'>No Currencies available.</div>;
   }
@@ -17,7 +22,7 @@ function CurrencyTable({
       return;
     }
     try {
-      await deleteCurrency(currency._id);
+      await deleteCurrency(currency._id, tokens.access);
       await fetchCurrencies();
     } catch (err) {
       console.error('Error deleting currency:', err);

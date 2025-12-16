@@ -2,6 +2,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useState, useEffect } from 'react';
 import { createCurrency, updateCurrency } from '../../services/currency';
+import { useAuth } from '../../context/AuthContext';
+
 function CurrencyDialog({
   openDialog,
   setOpenDialog,
@@ -10,6 +12,7 @@ function CurrencyDialog({
   fetchCurrencies,
 }) {
   /* ========== useStates and useEffect ========== */
+  const { tokens } = useAuth();
   const [isEditMode, setIsEditMode] = useState(false);
   const [errMsg, setErrMsg] = useState('');
   const [newCurrency, setNewCurrency] = useState({
@@ -18,6 +21,7 @@ function CurrencyDialog({
     rateToBase: '',
     isActive: true,
   });
+
   useEffect(() => {
     if (openDialog && selectedCurrency) {
       setIsEditMode(true);
@@ -55,9 +59,9 @@ function CurrencyDialog({
     e.preventDefault();
     try {
       if (isEditMode) {
-        await updateCurrency(newCurrency, selectedCurrency._id);
+        await updateCurrency(newCurrency, selectedCurrency._id, tokens.access);
       } else {
-        await createCurrency(newCurrency);
+        await createCurrency(newCurrency, tokens.access);
       }
       await fetchCurrencies();
       setOpenDialog(false);
