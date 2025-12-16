@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import RecordTable from '../components/Record/RecordTable';
-import { useAuth } from '../context/AuthContext';
 
 function Records({ recordData, fetchRecords }) {
   const [selectedRow, setSelectedRow] = useState(null);
