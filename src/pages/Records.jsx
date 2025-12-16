@@ -7,12 +7,12 @@ function Records({ recordData, fetchRecords }) {
 
   useEffect(() => {
     fetchRecords();
-  }, [])
+  }, []);
 
   return (
     <div className='px-4 max-w-7xl mx-auto'>
-      <h3 className='p-3 text-xl font-semibold'>Record Table</h3>
-      <div className='mb-2 flex justify-between items-center'>
+      <div className='mb-2 flex items-center'>
+        <h3 className='p-3 text-xl font-semibold'>Record Table</h3>
         <div className='flex items-center'>
           <HiOutlineRefresh
             size={25}
