@@ -1,5 +1,6 @@
 import { MdOutlineEdit, MdDeleteOutline } from 'react-icons/md';
 import { deleteEquipment } from '../../services/equipment';
+import { useAuth } from '../../context/AuthContext';
 
 function EquipmentTable({
   selectedRow,
@@ -9,6 +10,8 @@ function EquipmentTable({
   equipmentData,
   fetchEquipment,
 }) {
+  const { tokens } = useAuth();
+
   if (!equipmentData || equipmentData.length === 0) {
     return <div className='p-4 text-slate-500'>No Equipment available.</div>;
   }
@@ -18,7 +21,7 @@ function EquipmentTable({
       return;
     }
     try {
-      await deleteEquipment(equipment._id);
+      await deleteEquipment(equipment._id, tokens.access);
       await fetchEquipment();
     } catch (err) {
       console.error('Error deleting equipment:', err);
@@ -58,7 +61,10 @@ function EquipmentTable({
               >
                 <td className='px-6 py-4 text-sm text-gray-800'>{row.type}</td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
-                  {row.unitCost?.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2,})}
+                  {row.unitCost?.toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
                   {row.currency?.code || row.currency}

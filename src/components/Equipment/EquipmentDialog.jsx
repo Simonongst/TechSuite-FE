@@ -2,6 +2,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { IoCloseCircleOutline } from 'react-icons/io5';
 import { useState, useEffect } from 'react';
 import { createEquipment, updateEquipment } from '../../services/equipment';
+import { useAuth } from '../../context/AuthContext';
 
 function EquipmentDialog({
   openDialog,
@@ -21,6 +22,8 @@ function EquipmentDialog({
     currency: '',
     isActive: true,
   });
+
+  const { tokens } = useAuth();
 
   useEffect(() => {
     if (openDialog && selectedEquipment) {
@@ -79,9 +82,9 @@ function EquipmentDialog({
     try {
       let result;
       if (isEditMode) {
-        result = await updateEquipment(newEquipment, selectedEquipment._id);
+        result = await updateEquipment(newEquipment, selectedEquipment._id, tokens.access);
       } else {
-        result = await createEquipment(newEquipment);
+        result = await createEquipment(newEquipment, tokens.access);
       }
 
       if (result && result.success === false) {
