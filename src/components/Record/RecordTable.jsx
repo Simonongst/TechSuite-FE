@@ -1,6 +1,7 @@
-import { MdDeleteOutline } from 'react-icons/md';
+import { MdOutlineEdit, MdDeleteOutline } from 'react-icons/md';
 import { deleteRecord } from '../../services/record';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function RecordTable({
   selectedRow,
@@ -9,6 +10,7 @@ function RecordTable({
   fetchRecords,
 }) {
   const { tokens } = useAuth();
+  const navigate = useNavigate();
 
   if (!recordData || recordData.length === 0) {
     return <div className='p-4 text-slate-500'>No Record available.</div>;
@@ -110,6 +112,15 @@ function RecordTable({
                 </td>
                 <td className='px-6 py-4 text-sm text-gray-800'>
                   <div className='flex gap-1'>
+                    <button
+                      className='bg-blue-400 p-1 rounded-lg text-white cursor-pointer'
+                      onClick={() => {
+                        console.log('Navigatin with row:', row);
+                        navigate('/calculator', { state: { record: row } });
+                      }}
+                    >
+                      <MdOutlineEdit size={20} />
+                    </button>
                     <button
                       className='p-1 rounded-lg text-white cursor-pointer bg-red-400'
                       onClick={() => {
