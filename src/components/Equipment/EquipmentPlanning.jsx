@@ -1,8 +1,15 @@
-import { useAuth } from '../../context/AuthContext'
+import { useAuth } from '../../context/AuthContext';
 import { createRecord, updateRecord } from '../../services/record';
 
-function EquipmentPlanning({ currencyData, form, setForm, summary, editRecord, handleDone }) {
-const { tokens } = useAuth();
+function EquipmentPlanning({
+  currencyData,
+  form,
+  setForm,
+  summary,
+  editRecord,
+  handleDone,
+}) {
+  const { tokens } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,7 +28,7 @@ const { tokens } = useAuth();
     });
   };
 
-    const handleSave = async () => {
+  const handleSave = async () => {
     const payload = { form, summary };
     let res;
 
@@ -163,19 +170,10 @@ const { tokens } = useAuth();
         </label>
       </fieldset>
       <div className='mt-12 mb-4 flex justify-end gap-4'>
-        {!editRecord && (
         <button
           type='button'
-          onClick={handleReset}
-          className='text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700'
-        >
-              Reset
-        </button>
-        )}
-        <button
-          type="button"
           onClick={handleSave}
-          className="text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+          className='text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700'
         >
           {editRecord ? 'Update Entry' : 'Save Entry'}
         </button>
@@ -183,9 +181,18 @@ const { tokens } = useAuth();
           <button
             type='button'
             onClick={handleDone}
-            className="text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700"
+            className='text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700'
           >
             Cancel
+          </button>
+        )}
+        {!editRecord && (
+          <button
+            type='button'
+            onClick={handleReset}
+            className='text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700'
+          >
+            Reset
           </button>
         )}
       </div>
