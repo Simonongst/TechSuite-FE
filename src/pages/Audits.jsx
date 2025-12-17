@@ -1,9 +1,8 @@
 import { HiOutlineRefresh } from 'react-icons/hi';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import AuditTable from '../components/Audit/AuditTable';
 
 function Audits({ auditData, fetchAudits }) {
-  const [selectedRow, setSelectedRow] = useState(null);
 
   useEffect(() => {
     fetchAudits();
@@ -17,7 +16,6 @@ function Audits({ auditData, fetchAudits }) {
           <HiOutlineRefresh
             size={25}
             onClick={() => {
-              setSelectedRow(null);
               fetchAudits();
             }}
             className='transition-transform duration-200 hover:rotate-45'
@@ -25,8 +23,6 @@ function Audits({ auditData, fetchAudits }) {
         </div>
       </div>
       <AuditTable
-        selectedRow={selectedRow}
-        setSelectedRow={setSelectedRow}
         auditData={auditData}
         fetchAudits={fetchAudits}
       />
