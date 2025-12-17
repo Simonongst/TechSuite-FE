@@ -12,12 +12,14 @@ import { getAllCurrency } from './services/currency';
 import { getAllEquipment } from './services/equipment';
 import { getAllUsers } from './services/user';
 import { getAllRecords } from './services/record';
+import { getAllAudits } from './services/audit.js';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import AuditChecklist from './pages/AuditChecklist.jsx';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
 import User from './pages/User';
 import Records from './pages/Records.jsx';
+import Audits from './pages/Audits.jsx';
 import Settings from './pages/Settings.jsx';
 import ForgotPassword from './pages/ForgotPassword.jsx';
 import ResetPassword from './pages/ResetPassword.jsx';
@@ -27,6 +29,7 @@ function App() {
   const [equipmentData, setEquipmentData] = useState([]);
   const [userData, setUserData] = useState([]);
   const [recordData, setRecordData] = useState([]);
+  const [auditData, setAuditData] = useState([]);
   const { isAuthenticated, loading, tokens } = useAuth();
   const location = useLocation();
 
@@ -70,12 +73,23 @@ function App() {
     }
   }
 
+  async function fetchAudits() {
+    try {
+      const data = await getAllAudits(tokens.access);
+      console.log(data);
+      if (data) setAuditData(data);
+    } catch (error) {
+      console.log('Error fetching audits data from BE:', error);
+    }
+  }
+
   useEffect(() => {
     if (isAuthenticated) {
       fetchCurrencies();
       fetchEquipment();
       fetchUsers();
       fetchRecords();
+      fetchAudits();
     }
   }, [isAuthenticated]);
 
@@ -107,6 +121,7 @@ function App() {
           {location.pathname !== '/currencies' &&
             location.pathname !== '/equipment' &&
             location.pathname !== '/users' &&
+            location.pathname !== '/audits' &&
             location.pathname !== '/records' &&
             location.pathname !== '/settings' && <MainTabs />}
         </>
@@ -158,8 +173,12 @@ function App() {
           }
         />
         <Route 
-          path='/audit-checklist'
-          element={<AuditChecklist />}
+          path='/audit-checklist' 
+          element={<AuditChecklist />} 
+        />
+        <Route
+          path='/audits'
+          element={<Audits auditData={auditData} fetchAudits={fetchAudits} />}
         />
         <Route
           path='/equipment'
