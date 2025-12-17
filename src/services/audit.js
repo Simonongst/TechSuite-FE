@@ -42,3 +42,17 @@ export const updateAudit = async (updatedAudit, auditId, token) => {
     console.log(`Error in updating audit: ${error.message}`);
   }
 };
+
+export const deleteAudit = async (auditId, token) => {
+  try {
+    const res = await axios.delete(`${BASE_URL}/audits/${auditId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('Deleted audit', res);
+    return res.data;
+  } catch (error) {
+    console.log(`Error in deleting audit: ${error.message}`);
+  }
+};
