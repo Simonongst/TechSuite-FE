@@ -29,20 +29,6 @@ export const createAudit = async (newAudit, token) => {
   }
 };
 
-export const updateAudit = async (updatedAudit, auditId, token) => {
-  try {
-    const res = await axios.put(`${BASE_URL}/audits/${auditId}`, updatedAudit, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    console.log('Updated audit', res);
-    return res.data;
-  } catch (error) {
-    console.log(`Error in updating audit: ${error.message}`);
-  }
-};
-
 export const deleteAudit = async (auditId, token) => {
   try {
     const res = await axios.delete(`${BASE_URL}/audits/${auditId}`, {
