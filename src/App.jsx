@@ -13,6 +13,7 @@ import { getAllEquipment } from './services/equipment';
 import { getAllUsers } from './services/user';
 import { getAllRecords } from './services/record';
 import EquipmentCalculator from './pages/EquipmentCalculator';
+import AuditChecklist from './pages/AuditChecklist.jsx';
 import Currency from './pages/Currency';
 import Equipment from './pages/Equipment';
 import User from './pages/User';
@@ -145,7 +146,7 @@ function App() {
           }
         />
         <Route
-          path='/calculator'
+          path='/equipment-calculator'
           element={
             <EquipmentCalculator
               key='edit'
@@ -155,6 +156,10 @@ function App() {
               equipmentData={equipmentData}
             />
           }
+        />
+        <Route 
+          path='/audit-checklist'
+          element={<AuditChecklist />}
         />
         <Route
           path='/equipment'
