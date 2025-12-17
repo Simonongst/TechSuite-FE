@@ -128,7 +128,7 @@ function RecordTable({
                       className='bg-blue-400 p-1 rounded-lg text-white cursor-pointer'
                       onClick={() => {
                         console.log('Navigatin with row:', row);
-                        navigate('/calculator', { state: { record: row } });
+                        navigate('/equipment-calculator', { state: { record: row } });
                       }}
                     >
                       <MdOutlineEdit size={20} />
