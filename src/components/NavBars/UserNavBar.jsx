@@ -37,7 +37,7 @@ function UserNavBar() {
       name: 'Records',
       icon: <AiOutlineDatabase size={25}/>,
       path: '/records',
-      roles: ['Admin', 'Reviewer', 'Editor', 'User'],
+      roles: ['Admin', 'Reviewer', 'Editor'],
     },
     {
       name: 'Settings',
