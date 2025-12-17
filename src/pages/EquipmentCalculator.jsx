@@ -37,6 +37,7 @@ function EquipmentCalculator({ currencyData, equipmentData }) {
     <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 px-4 py-4 max-w-7xl mx-auto'>
       <div className='lg:col-span-2 bg-white rounded-lg shadow-md p-6'>
         <EquipmentPlanning
+          equipmentData={equipmentData}
           currencyData={currencyData}
           form={form}
           setForm={setForm}
