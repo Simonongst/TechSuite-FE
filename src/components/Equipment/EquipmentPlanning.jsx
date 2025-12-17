@@ -2,6 +2,7 @@ import { useAuth } from '../../context/AuthContext';
 import { createRecord, updateRecord } from '../../services/record';
 
 function EquipmentPlanning({
+  equipmentData,
   currencyData,
   form,
   setForm,
@@ -104,9 +105,10 @@ function EquipmentPlanning({
               id='desktop'
               type='number'
               name='desktop'
+              disabled={!equipmentData.find(equipment => equipment.type === 'Desktop')?.isActive}
               value={form.desktop}
               onChange={handleChange}
-              className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+              className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm disabled:bg-gray-100'
               required
             ></input>
           </label>
@@ -117,8 +119,9 @@ function EquipmentPlanning({
               type='number'
               name='laptop'
               value={form.laptop}
+              disabled={!equipmentData.find(equipment => equipment.type === 'Laptop')?.isActive}
               onChange={handleChange}
-              className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+              className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm disabled:bg-gray-100'
               required
             ></input>
           </label>
@@ -131,9 +134,10 @@ function EquipmentPlanning({
             id='monitor'
             type='number'
             name='monitor'
+            disabled={!equipmentData.find(equipment => equipment.type === 'Monitor')?.isActive}
             value={form.monitor}
             onChange={handleChange}
-            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm disabled:bg-gray-100'
             required
           ></input>
         </label>
@@ -145,9 +149,10 @@ function EquipmentPlanning({
             id='deskPhone'
             type='number'
             name='deskPhone'
+            disabled={!equipmentData.find(equipment => equipment.type === 'Desk Phone')?.isActive}
             value={form.deskPhone}
             onChange={handleChange}
-            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
+            className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm disabled:bg-gray-100'
             required
           ></input>
         </label>
@@ -163,7 +168,7 @@ function EquipmentPlanning({
             className='mt-2 py-2 px-2 block w-full border-gray-300 rounded-md shadow-sm'
             required
           >
-            <option value=''>Select Switch Type</option>
+            <option disabled value=''>Select Switch Type</option>
             <option value='24'>24</option>
             <option value='48'>48</option>
           </select>
