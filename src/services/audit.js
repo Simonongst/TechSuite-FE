@@ -15,3 +15,16 @@ export const getAllAudits = async (token) => {
     return null;
   }
 };
+
+export const createAudit = async (newAudit, token) => {
+  try {
+    const res = await axios.post(`${BASE_URL}/audits`, newAudit, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(`Error in creating audit: ${error.message}`);
+  }
+};
