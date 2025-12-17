@@ -10,7 +10,7 @@ function EquipmentPlanning({
   editRecord,
   handleDone,
 }) {
-  const { tokens } = useAuth();
+  const { user, tokens } = useAuth();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +55,7 @@ function EquipmentPlanning({
       </p>
       <form
         onSubmit={(e) => {
-          e.preventDefault
+          e.preventDefault();
           handleSave();
         }}
       >
@@ -197,12 +197,14 @@ function EquipmentPlanning({
           </label>
         </fieldset>
         <div className='mt-12 mb-4 flex justify-end gap-4'>
+          {user.role !== 'User' && (
           <button
             type='submit'
             className='text-sm px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700'
           >
             {editRecord ? 'Update Entry' : 'Save Entry'}
           </button>
+          )}
           {editRecord && (
             <button
               type='button'
