@@ -1,6 +1,12 @@
-function AuditProgress({ checklistItems, checkedItems }) {
+import { useAuth } from "../../context/AuthContext";
+
+function AuditProgress({ checklistItems, auditData }) {
+  const { user } = useAuth();
+
+  const userAudits = auditData.filter(audit => audit.userId._id === user._id);
+
   const totalItems = checklistItems.length;
-  const completedItems = checkedItems.length;
+  const completedItems = userAudits.length;
   const progress =
     totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
 
@@ -31,7 +37,7 @@ function AuditProgress({ checklistItems, checkedItems }) {
         <h3 className='font-semibold text-sm'>Category Breakdown</h3>
         {Object.entries(categories).map(([category, items]) => {
           const completed = items.filter((item) =>
-            checkedItems.includes(item.label)
+            userAudits.some(audit => audit.label === item.label)
           ).length;
           const percent = Math.round((completed / items.length) * 100);
 
