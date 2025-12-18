@@ -31,7 +31,7 @@ const SignUp = () => {
       username: username,
       email: email,
       role: 'User',
-      isAPIT: true,
+      isAPIT: false,
     });
 
     setLoading(false);
