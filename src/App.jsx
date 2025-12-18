@@ -12,7 +12,7 @@ import { getAllCurrency } from './services/currency';
 import { getAllEquipment } from './services/equipment';
 import { getAllUsers } from './services/user';
 import { getAllRecords } from './services/record';
-import { getAllAudits } from './services/audit.js';
+import { getAllAudits, createAudit, deleteAudit } from './services/audit.js';
 import EquipmentCalculator from './pages/EquipmentCalculator';
 import AuditChecklist from './pages/AuditChecklist.jsx';
 import Currency from './pages/Currency';
@@ -30,7 +30,7 @@ function App() {
   const [userData, setUserData] = useState([]);
   const [recordData, setRecordData] = useState([]);
   const [auditData, setAuditData] = useState([]);
-  const { isAuthenticated, loading, tokens } = useAuth();
+  const { isAuthenticated, loading, tokens, user } = useAuth();
   const location = useLocation();
 
   async function fetchCurrencies() {
@@ -72,6 +72,40 @@ function App() {
       console.log('Error fetching records data from BE:', error);
     }
   }
+
+async function handleToggle(label, category, isChecked) {
+  if (isChecked) {
+    const payload = {
+      userId: user._id,
+      category,
+      label,
+      isComplete: true,
+      date: new Date(),
+    };
+    try {
+      await createAudit(payload, tokens.access);
+      fetchAudits();
+    } catch (error) {
+      console.error('Error creating audit record:', error);
+    }
+  } else {
+    try {
+      const auditToDelete = auditData.find(
+        (a) =>
+          a.label === label &&
+          a.category === category &&
+          a.userId._id === user._id
+      );
+      if (auditToDelete) {
+        await deleteAudit(auditToDelete._id, tokens.access);
+        fetchAudits();
+      }
+    } catch (error) {
+      console.error('Error deleting audit record:', error);
+    }
+  }
+}
+
 
   async function fetchAudits() {
     try {
@@ -172,13 +206,25 @@ function App() {
             />
           }
         />
-        <Route 
-          path='/audit-checklist' 
-          element={<AuditChecklist />} 
+        <Route
+          path='/audit-checklist'
+          element={
+            <AuditChecklist
+              auditData={auditData}
+              handleToggle={handleToggle}
+            />
+          }
         />
         <Route
           path='/audits'
-          element={<Audits auditData={auditData} fetchAudits={fetchAudits} />}
+          element={
+            <RoleProtectedRoute allowedRoles={['Admin', 'Reviewer']}>
+            <Audits
+              auditData={auditData}
+              fetchAudits={fetchAudits}
+            />
+            </RoleProtectedRoute>
+          }
         />
         <Route
           path='/equipment'
@@ -208,10 +254,7 @@ function App() {
           path='/records'
           element={
             <ProtectedRoute>
-              <Records 
-                recordData={recordData} 
-                fetchRecords={fetchRecords} 
-                />
+              <Records recordData={recordData} fetchRecords={fetchRecords} />
             </ProtectedRoute>
           }
         />
