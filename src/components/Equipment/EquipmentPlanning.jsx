@@ -41,7 +41,7 @@ function EquipmentPlanning({
 
     if (res.success) {
       console.log('Record saved:', res.record);
-      if (handleDone) handleDone();
+      if (editRecord && handleDone) handleDone();
     } else {
       console.error('Failed to save record:', res.error);
     }
