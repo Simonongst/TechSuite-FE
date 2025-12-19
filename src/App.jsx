@@ -157,7 +157,7 @@ async function handleToggle(label, category, isChecked) {
             location.pathname !== '/users' &&
             location.pathname !== '/audits' &&
             location.pathname !== '/records' &&
-            location.pathname !== '/settings' && <MainTabs />}
+            location.pathname !== '/settings' && <MainTabs userData={userData}/>}
         </>
       )}
 
