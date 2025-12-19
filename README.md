@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
 </head>
 <body>
-  <img src="./src/assets/TechSuite-readme-banner.png"/>
+  <img src="./src/assets/TechSuiteBanner.png"/>
 
   <h2>About the App</h2>
   <p>
