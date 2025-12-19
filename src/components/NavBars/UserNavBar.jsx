@@ -48,7 +48,7 @@ function UserNavBar() {
   ];
 
   const allowedNavItems = allNavItems.filter(
-    (item) => user && item.roles.includes(user.role)
+    (item) => user?.role && item.roles.includes(user.role)
   );
 
   return (

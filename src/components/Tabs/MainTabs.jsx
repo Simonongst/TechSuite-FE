@@ -9,7 +9,7 @@ function MainTabs({userData}) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const currentUserData = userData.find(currentUser => currentUser.eid === user.eid);
+  const currentUserData = userData?.find(currentUser => currentUser.eid === user?.eid);
 
   const tabValue =
     location.pathname === '/audit-checklist'
@@ -35,7 +35,7 @@ function MainTabs({userData}) {
             <BsCalculatorFill size={20} />
             Equipment Calculator
           </Tabs.Trigger>
-          {user.role !== 'User' && !(user.role === 'Editor' && !currentUserData?.isAPIT) && (
+          {user?.role !== 'User' && !(user?.role === 'Editor' && !currentUserData?.isAPIT) && (
             <Tabs.Trigger
               value='audit-checklist'
               className='flex items-center gap-2 px-14 py-1 rounded-full font-medium
