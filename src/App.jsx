@@ -73,39 +73,38 @@ function App() {
     }
   }
 
-async function handleToggle(label, category, isChecked) {
-  if (isChecked) {
-    const payload = {
-      userId: user._id,
-      category,
-      label,
-      isComplete: true,
-      date: new Date(),
-    };
-    try {
-      await createAudit(payload, tokens.access);
-      fetchAudits();
-    } catch (error) {
-      console.error('Error creating audit record:', error);
-    }
-  } else {
-    try {
-      const auditToDelete = auditData.find(
-        (a) =>
-          a.label === label &&
-          a.category === category &&
-          a.userId._id === user._id
-      );
-      if (auditToDelete) {
-        await deleteAudit(auditToDelete._id, tokens.access);
+  async function handleToggle(label, category, isChecked) {
+    if (isChecked) {
+      const payload = {
+        userId: user._id,
+        category,
+        label,
+        isComplete: true,
+        date: new Date(),
+      };
+      try {
+        await createAudit(payload, tokens.access);
         fetchAudits();
+      } catch (error) {
+        console.error('Error creating audit record:', error);
       }
-    } catch (error) {
-      console.error('Error deleting audit record:', error);
+    } else {
+      try {
+        const auditToDelete = auditData.find(
+          (a) =>
+            a.label === label &&
+            a.category === category &&
+            a.userId._id === user._id
+        );
+        if (auditToDelete) {
+          await deleteAudit(auditToDelete._id, tokens.access);
+          fetchAudits();
+        }
+      } catch (error) {
+        console.error('Error deleting audit record:', error);
+      }
     }
   }
-}
-
 
   async function fetchAudits() {
     try {
@@ -157,7 +156,9 @@ async function handleToggle(label, category, isChecked) {
             location.pathname !== '/users' &&
             location.pathname !== '/audits' &&
             location.pathname !== '/records' &&
-            location.pathname !== '/settings' && <MainTabs userData={userData}/>}
+            location.pathname !== '/settings' && (
+              <MainTabs userData={userData} />
+            )}
         </>
       )}
 
@@ -186,12 +187,14 @@ async function handleToggle(label, category, isChecked) {
           path='/'
           key='new'
           element={
-            <EquipmentCalculator
-              currencyData={currencyData.filter(
-                (currency) => currency.isActive
-              )}
-              equipmentData={equipmentData}
-            />
+            <ProtectedRoute>
+              <EquipmentCalculator
+                currencyData={currencyData.filter(
+                  (currency) => currency.isActive
+                )}
+                equipmentData={equipmentData}
+              />
+            </ProtectedRoute>
           }
         />
         <Route
@@ -209,20 +212,14 @@ async function handleToggle(label, category, isChecked) {
         <Route
           path='/audit-checklist'
           element={
-            <AuditChecklist
-              auditData={auditData}
-              handleToggle={handleToggle}
-            />
+            <AuditChecklist auditData={auditData} handleToggle={handleToggle} />
           }
         />
         <Route
           path='/audits'
           element={
             <RoleProtectedRoute allowedRoles={['Admin', 'Reviewer']}>
-            <Audits
-              auditData={auditData}
-              fetchAudits={fetchAudits}
-            />
+              <Audits auditData={auditData} fetchAudits={fetchAudits} />
             </RoleProtectedRoute>
           }
         />
