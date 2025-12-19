@@ -56,7 +56,7 @@ function UserNavBar() {
       <div className='flex justify-end gap-3'>
       {allowedNavItems.map((item, idx) => (
         <Link key={idx} to={item.path} title={item.name}>
-          <span className='transition-transform duration-300 ease-in-out hover:scale-110'>
+          <span className='inline-flex items-center justify-center transition-transform duration-300 ease-in-out hover:scale-110'>
             {item.icon}
           </span>
         </Link>
