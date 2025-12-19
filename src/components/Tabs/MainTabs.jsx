@@ -4,10 +4,12 @@ import { GoChecklist } from 'react-icons/go';
 import { useAuth } from '../../context/AuthContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function MainTabs() {
+function MainTabs({userData}) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const currentUserData = userData.find(currentUser => currentUser.eid === user.eid);
 
   const tabValue =
     location.pathname === '/audit-checklist'
@@ -33,7 +35,7 @@ function MainTabs() {
             <BsCalculatorFill size={20} />
             Equipment Calculator
           </Tabs.Trigger>
-          {user.role !== 'User' && (
+          {user.role !== 'User' && !(user.role === 'Editor' && !currentUserData?.isAPIT) && (
             <Tabs.Trigger
               value='audit-checklist'
               className='flex items-center gap-2 px-14 py-1 rounded-full font-medium
