@@ -26,6 +26,15 @@ function UserDialog({
   });
 
   useEffect(() => {
+    if (newUser.role === 'User' && newUser.isAPIT) {
+      setNewUser(prev => ({
+        ...prev,
+        isAPIT: false,
+      }))
+    }
+  }, [newUser.role])
+
+  useEffect(() => {
     if (selectedUser) {
       setNewUser({
         eid: selectedUser.eid || '',
@@ -238,7 +247,13 @@ function UserDialog({
                 name='isAPIT'
                 value={newUser.isAPIT ? 'Yes' : 'No'}
                 onChange={handleInputChange}
-                className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500'
+                disabled={newUser.role === 'User'}
+                className={`w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500
+                  ${
+                    newUser.role === 'User'
+                      ? 'bg-gray-100 cursor-not-allowed'
+                      : ''
+                  }`}
               >
                 <option disabled value=''>
                   Select APIT Status
