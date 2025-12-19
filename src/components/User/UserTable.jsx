@@ -53,53 +53,63 @@ function UserTable({
             </tr>
           </thead>
           <tbody className='divide-y divide-gray-200'>
-            {userData.map((row, idx) => {
-              const isSelected = selectedRow === idx;
-              return (
-                <tr
-                  key={row.eid}
-                  onClick={() => setSelectedRow(idx)}
-                  className={`transition-colors
+            {!userData || userData.length === 0 ? (
+              <tr>
+                <td colSpan={6} className='p-4 text-center text-slate-500'>
+                  No user available.
+                </td>
+              </tr>
+            ) : (
+              userData.map((row, idx) => {
+                const isSelected = selectedRow === idx;
+                return (
+                  <tr
+                    key={row.eid}
+                    onClick={() => setSelectedRow(idx)}
+                    className={`transition-colors
                   ${isSelected ? 'bg-blue-100' : 'hover:bg-gray-50'}`}
-                >
-                  <td className='px-6 py-4 text-sm text-gray-800'>{row.eid}</td>
-                  <td className='px-6 py-4 text-sm text-gray-800'>
-                    {row.username}
-                  </td>
-                  <td className='px-6 py-4 text-sm text-gray-800'>
-                    {row.email}
-                  </td>
-                  <td className='px-6 py-4 text-sm text-gray-800'>
-                    {row.role}
-                  </td>
-                  <td className='px-6 py-4 text-sm text-gray-800'>
-                    {row.isAPIT ? 'Yes' : 'No'}
-                  </td>
-                  <td className='px-6 py-4 text-sm text-gray-800'>
-                    <div className='flex gap-1'>
-                      <button className='bg-blue-400 p-1 rounded-lg text-white cursor-pointer'>
-                        <MdOutlineEdit
-                          size={20}
-                          onClick={() => {
-                            setSelectedUser(row);
-                            setOpenDialog(true);
-                          }}
-                        />
-                      </button>
-                      <button className='bg-red-400 p-1 rounded-lg text-white cursor-pointer'>
-                        <MdDeleteOutline
-                          size={20}
-                          onClick={() => {
-                            setSelectedUser(row);
-                            setOpenAlert(true);
-                          }}
-                        />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+                  >
+                    <td className='px-6 py-4 text-sm text-gray-800'>
+                      {row.eid}
+                    </td>
+                    <td className='px-6 py-4 text-sm text-gray-800'>
+                      {row.username}
+                    </td>
+                    <td className='px-6 py-4 text-sm text-gray-800'>
+                      {row.email}
+                    </td>
+                    <td className='px-6 py-4 text-sm text-gray-800'>
+                      {row.role}
+                    </td>
+                    <td className='px-6 py-4 text-sm text-gray-800'>
+                      {row.isAPIT ? 'Yes' : 'No'}
+                    </td>
+                    <td className='px-6 py-4 text-sm text-gray-800'>
+                      <div className='flex gap-1'>
+                        <button className='bg-blue-400 p-1 rounded-lg text-white cursor-pointer'>
+                          <MdOutlineEdit
+                            size={20}
+                            onClick={() => {
+                              setSelectedUser(row);
+                              setOpenDialog(true);
+                            }}
+                          />
+                        </button>
+                        <button className='bg-red-400 p-1 rounded-lg text-white cursor-pointer'>
+                          <MdDeleteOutline
+                            size={20}
+                            onClick={() => {
+                              setSelectedUser(row);
+                              setOpenAlert(true);
+                            }}
+                          />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
